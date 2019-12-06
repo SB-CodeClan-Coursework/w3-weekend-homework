@@ -23,17 +23,25 @@ class Film
     @id = star['id'].to_i
     end
 
+  def self.all()
+    sql = "SELECT * FROM films"
+    data = SqlRunner.run(sql)
+    return data.map{|film| Film.new(film)}
+  end
+
+  def update()
+    sql = "
+          UPDATE films SET (title, price) = ($1, $2)
+          WHERE id = $3
+          "
+    values = [@title, @price, @id]
+    SqlRunner.run(sql, values)
+  end
+
   def delete()
     sql = "DELETE FROM films where id = $1"
     values = [@id]
     SqlRunner.run(sql, values)
   end
-
-  # def self.all()
-  #   sql = "SELECT * FROM films"
-  #   data = SqlRunner.run(sql)
-  #   return data.map{|film| film.new(film)}
-  # end
-
 
 end
