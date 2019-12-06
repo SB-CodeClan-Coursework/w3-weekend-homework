@@ -1,12 +1,6 @@
+DROP TABLE tickets;
 DROP TABLE customers;
 DROP TABLE films;
-DROP TABLE tickets;
-
-CREATE TABLE tickets(
-  id SERIAL PRIMARY KEY,
-  customer_id INT,
-  film_id INT
-);
 
 CREATE TABLE films(
   title VARCHAR(255),
@@ -16,4 +10,10 @@ CREATE TABLE films(
 CREATE TABLE customers(
   name VARCHAR(255),
   funds INT
+);
+
+CREATE TABLE tickets(
+  id SERIAL PRIMARY KEY,
+  customer_id INT,
+  film_id INT
 );
