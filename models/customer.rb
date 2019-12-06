@@ -19,15 +19,29 @@ class Customer
           RETURNING id
           "
     values = [@name, @funds]
-    customer = SqlRunner.run(sql, values).first
-    @id = customer['id'].to_i
+    customer = SqlRunner.run(sql, values)
+    @id = customer.first['id'].to_i
   end
 
+  def self.all()
+    sql = "SELECT * FROM customers"
+    data = SqlRunner.run(sql)
+    return data.map{|customer| Customer.new(customer)}
+  end
 
+  def update()
+    sql = "
+          UPDATE customers SET name = $1
+          WHERE id = $2
+          "
+    values = [@name, @id]
+    SqlRunner.run(sql, values)
+  end
 
-
-
-
-
-
+  def delete()
+    sql = "DELETE FROM customers WHERE id = $1"
+    values = [@id]
+    SqlRunner.run(sql, values)
+  end
+  
 end

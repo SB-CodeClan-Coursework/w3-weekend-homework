@@ -11,4 +11,29 @@ class Film
     @price = options['price'].to_i
   end
 
+
+  def save()
+    sql = "
+          INSERT INTO films (title, price)
+          VALUES ($1, $2)
+          RETURNING id
+          "
+    values = [@title, @price]
+    star = SqlRunner.run(sql, values).first
+    @id = star['id'].to_i
+    end
+
+  def delete()
+    sql = "DELETE FROM films where id = $1"
+    values = [@id]
+    SqlRunner.run(sql, values)
+  end
+
+  # def self.all()
+  #   sql = "SELECT * FROM films"
+  #   data = SqlRunner.run(sql)
+  #   return data.map{|film| film.new(film)}
+  # end
+
+
 end
