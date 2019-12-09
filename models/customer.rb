@@ -51,11 +51,13 @@ class Customer
 
   def all_films()
     sql = "
-          SELECT films.* FROM films INNER JOIN tickets ON films.id = tickets.film_id WHERE customer_id = $1
+          SELECT films.* FROM films
+          INNER JOIN tickets ON tickets.films_id = films.id
+          WHERE customer_id = $1;
           "
     values = [@id]
     data = SqlRunner.run(sql, values)
-    return Film.map(data)
+    return data.map{|hash| Film.new(hash) }
   end
 
 end
