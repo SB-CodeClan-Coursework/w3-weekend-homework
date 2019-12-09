@@ -18,8 +18,8 @@ class Ticket
           RETURNING id
           "
     values = [@customer_id, @film_id]
-    film = SqlRunner.run(sql, values)
-    @id = film.first['id'].to_i
+    ticket = SqlRunner.run(sql, values)
+    @id = ticket.first['id'].to_i
   end
 
   def self.all()
@@ -34,5 +34,12 @@ class Ticket
     values = [@id]
     SqlRunner.run(sql, values)
   end
+
+  def self.delete_all()
+    sql = "DELETE FROM tickets"
+    SqlRunner.run(sql)
+  end
+
+
 
 end
